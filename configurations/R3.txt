@@ -1,0 +1,59 @@
+! ==========================================
+! Project: Enterprise OSPF + Centralized DHCP
+! Device: R3
+! OSPF Process ID: 300
+! ==========================================
+
+! Enter configuration mode
+enable
+configure terminal
+
+! BASIC CONFIGURATION
+hostname R3
+
+! Link to R2
+interface GigabitEthernet0/0
+ ip address 23.1.1.2 255.255.255.252
+ no shutdown
+ exit
+
+! Link to R4
+interface GigabitEthernet0/1
+ ip address 34.1.1.1 255.255.255.252
+ no shutdown
+ exit
+
+! Link to R1
+interface GigabitEthernet0/2
+ ip address 13.1.1.2 255.255.255.252
+ no shutdown
+ exit
+
+! LAN20 Interface
+interface GigabitEthernet0/3
+ ip address 20.1.1.100 255.255.255.0
+ ip helper-address 30.1.1.2
+ no shutdown
+ exit
+
+! LOOPBACK
+interface Loopback0
+ ip address 3.3.3.3 255.255.255.255
+ exit
+
+! OSPF CONFIGURATION
+router ospf 300
+ router-id 3.3.3.3
+ network 13.1.1.0 0.0.0.3 area 0
+ network 23.1.1.0 0.0.0.3 area 0
+ network 34.1.1.0 0.0.0.3 area 0
+ network 3.3.3.3 0.0.0.0 area 0
+ network 20.1.1.0 0.0.0.255 area 0
+ exit
+
+! DHCP RELAY CONFIGURATION
+interface GigabitEthernet0/3
+ip helper-address 30.1.1.2
+exit
+
+! END OF R3 CONFIGURATION
