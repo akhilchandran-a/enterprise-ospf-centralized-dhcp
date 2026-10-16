@@ -28,6 +28,8 @@ The project demonstrates routing configuration, OSPF neighbor formation, DHCP re
 
 The network contains four interconnected routers, three client LANs, and one centralized DHCP server.
 
+![Enterprise OSPF Network Topology](topology/enterprise-topology.png)
+
 - **R1:** Core routing connectivity.
 - **R2:** LAN10 gateway.
 - **R3:** LAN20 gateway.
